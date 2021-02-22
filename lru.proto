@@ -1,0 +1,31 @@
+syntax="proto3";
+
+import "google/protobuf/empty.proto";
+
+
+message Read{
+	int32 address = 1;	
+}
+
+message Data{
+	int32 address = 1;
+	string data = 2;
+	enum cache_miss_hit_evict{
+		MISS = 0;
+		HIT = 1;
+		EVICT = 2;
+	}
+	cache_miss_hit_evict status = 3;
+}
+
+message Empty{}
+
+
+message MemImageData{	
+	repeated string data = 1;
+}
+
+service Memory{
+	rpc read(Read) returns (Data){}
+	rpc image(Empty) returns (MemImageData){}
+}
